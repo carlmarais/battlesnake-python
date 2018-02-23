@@ -49,12 +49,19 @@ def move():
     # TODO: Do things with data
     
     directions = ['up', 'down', 'left', 'right']
+    directions = checkWall(data, directions)
+
     direction = random.choice(directions)
     print direction
     return {
         'move': direction,
         'taunt': 'battlesnake-python!'
     }
+
+def checkWall(data, directions):
+	# TODO: Remove directions that result in snake running into walls
+	
+	return directions
 
 
 # Expose WSGI app (so gunicorn can find it)
