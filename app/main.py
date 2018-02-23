@@ -33,7 +33,7 @@ def start():
         'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
         'head_url': head_url,
         'name': 'TROUSER SNAKEBOI',
-        'head_type': , 'pixel'
+        'head_type': 'pixel',
         'tail_type': 'pixel'
     }
 
