@@ -50,7 +50,7 @@ def move():
     
     directions = ['up', 'down', 'left', 'right']
     directions = checkWall(data, directions)
-    directions = checkSelf(data, directions)
+    # directions = checkSelf(data, directions)
 
     direction = random.choice(directions)
     print direction
@@ -68,15 +68,15 @@ def checkWall(data, directions):
 
 	# X Directions
 	if snake_x == (data['width'] - 1):
-		directions.Remove('right')
+		directions.remove('right')
 	elif snake_x == 0:
-		directions.Remove('left')
+		directions.remove('left')
 	
 	# Y Directions
 	if snake_y == (data['height'] - 1):
-		directions.Remove('down')
+		directions.remove('down')
 	elif snake_y == 0:
-		directions.Remove('up')
+		directions.remove('up')
 
 	return directions
 
@@ -91,13 +91,13 @@ def checkSelf(data, directions):
 		test_y = data['you']['body']['data'][i]['y']
 
 		if snake_x + 1 == test_x and snake_y == test_y:
-			directions.Remove('right')
+			directions.remove('right')
 		elif snake_x - 1 == test_x and snake_y == test_y:
-			directions.Remove('left')
+			directions.remove('left')
 		elif snake_y + 1 == test_y and snake_x == test_x:
-			directions.Remove('down')
+			directions.remove('down')
 		elif snake_y - 1 == test_y and snake_x == test_x:
-			directions.Remove('up')
+			directions.remove('up')
 
 	return directions
 
