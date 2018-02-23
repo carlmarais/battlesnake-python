@@ -86,7 +86,7 @@ def checkSelf(data, directions):
 	snake_x = data['you']['body']['data'][0]['x']
 	snake_y = data['you']['body']['data'][0]['y']
 
-	for i in data['you']['body']['data']:
+	for i in range(len(data['you']['body']['data'])):
 		test_x = data['you']['body']['data'][i]['x']
 		test_y = data['you']['body']['data'][i]['y']
 
