@@ -1,0 +1,4 @@
+- board height h-1, width w-1: maximum values for snake position
+- determine closest food by euclidean distance for each instance
+- 
+

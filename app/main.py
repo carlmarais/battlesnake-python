@@ -36,8 +36,9 @@ def start():
         'head_url': head_url,
         'name': 'battlesnake-python',
         "taunt": "OH GOD NOT THE BEES",
-	    "head_type": "pixel",
-	    "tail_type": "pixel"
+        'name': 'TROUSER SNAKEBOI',
+        'head_type': 'pixel',
+        'tail_type': 'pixel'
     }
 
 
