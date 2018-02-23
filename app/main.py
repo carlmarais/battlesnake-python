@@ -50,7 +50,7 @@ def move():
     
     directions = ['up', 'down', 'left', 'right']
     directions = checkWall(data, directions)
-    # directions = checkSelf(data, directions)
+    directions = checkSelf(data, directions)
 
     direction = random.choice(directions)
     print direction
