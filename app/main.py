@@ -59,8 +59,8 @@ def move():
     }
 
 def checkWall(data, directions):
-	# TODO: Remove directions that result in snake running into walls
-	
+	# Remove directions that result in snake running into walls
+
 	snake_x = data['you']['body']['data'][0]['x']
 	snake_y = data['you']['body']['data'][0]['y']
 	# print snake_x, snake_y
@@ -76,6 +76,11 @@ def checkWall(data, directions):
 		directions.Remove('down')
 	elif snake_y == 0:
 		directions.Remove('up')
+
+	return directions
+
+def checkSelf(data, directions):
+	# Remove directions that result in snake running into walls
 
 	return directions
 
