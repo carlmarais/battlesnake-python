@@ -125,6 +125,8 @@ def findFood(data, directions):
 			closest_food_x = food_i_x
 			closest_food_y = food_i_y
 
+	choices = {key: None for key in directions}
+
 	if 'left' in directions:
 		choices['left'] = abs(head_x - food_i_x - 1) + abs(head_y - food_i_y)
 	if 'right' in directions:
