@@ -43,6 +43,16 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
+
+
+    # TODO: Do things with data
+
+    ourSnake = data['you']
+    ourHead = ourSnake['body']['data'][0]
+	otherSnakes = []
+
+	for snake in data['snakes']:
+		otherSnakes.append(snake)
     
     directions = ['up', 'down', 'left', 'right']
     directions = checkWall(data, directions)
@@ -52,15 +62,14 @@ def move():
     print direction
     return {
         'move': direction,
-        'taunt': 'battlesnake-python!'
+        'taunt': 'OH GOD NOT THE BEES',
     }
 
-def checkWall(data, directions):
+def checkWall(data, directions, ourHead):
 	# Remove directions that result in snake running into walls
 
-	snake_x = data['you']['body']['data'][0]['x']
-	snake_y = data['you']['body']['data'][0]['y']
-	# print snake_x, snake_y
+	snake_x = ourHead['x']
+	snake_y = ourHead['y']
 
 	# X Directions
 	if 'right' in directions and snake_x == (data['width'] - 1):
@@ -76,15 +85,15 @@ def checkWall(data, directions):
 
 	return directions
 
-def checkSelf(data, directions):
+def checkSelf(data, directions, ourHead, ourSnake):
 	# Remove directions that result in snake running into walls
 
-	head_x = data['you']['body']['data'][0]['x']
-	head_y = data['you']['body']['data'][0]['y']
+	head_x = ourHead['x']
+	head_y = ourHead['y']
 
 	for i in range(len(data['you']['body']['data'])):
-		body_x = data['you']['body']['data'][i]['x']
-		body_y = data['you']['body']['data'][i]['y']
+		body_x = ourSnake['body']['data'][i]['x']
+		body_y = ourSnake['body']['data'][i]['y']
 
 		if 'right' in directions and head_x + 1 == body_x and head_y == body_y:
 			directions.remove('right')
