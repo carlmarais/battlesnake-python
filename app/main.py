@@ -66,15 +66,15 @@ def checkWall(data, directions):
 	snake_y = data['you']['body']['data'][0]['y']
 
 	# X Directions
-	if ('right' in directions) and snake_x == (data['width'] - 1):
+	if 'right' in directions and snake_x == (data['width'] - 1):
 		directions.remove('right')
-	elif ('left' in directions) and snake_x == 0:
+	elif 'left' in directions and snake_x == 0:
 		directions.remove('left')
 	
 	# Y Directions
-	if ('down' in directions) and snake_y == (data['height'] - 1):
+	if 'down' in directions and snake_y == (data['height'] - 1):
 		directions.remove('down')
-	elif ('up' in directions) and snake_y == 0:
+	elif 'up' in directions and snake_y == 0:
 		directions.remove('up')
 
 	return directions
@@ -82,24 +82,27 @@ def checkWall(data, directions):
 def checkSelf(data, directions):
 	# Remove directions that result in snake running into walls
 
-	snake_x = data['you']['body']['data'][0]['x']
-	snake_y = data['you']['body']['data'][0]['y']
+	head_x = data['you']['body']['data'][0]['x']
+	head_y = data['you']['body']['data'][0]['y']
 
 	for i in range(len(data['you']['body']['data'])):
-		test_x = data['you']['body']['data'][i]['x']
-		test_y = data['you']['body']['data'][i]['y']
+		body_x = data['you']['body']['data'][i]['x']
+		body_y = data['you']['body']['data'][i]['y']
 
-		if ('right' in directions) and snake_x + 1 == test_x and snake_y == test_y:
+		if 'right' in directions and head_x + 1 == body_x and head_y == body_y:
 			directions.remove('right')
-		elif ('left' in directions) and snake_x - 1 == test_x and snake_y == test_y:
+		elif 'left' in directions and head_x - 1 == body_x and head_y == body_y:
 			directions.remove('left')
-		elif ('down' in directions) and snake_y + 1 == test_y and snake_x == test_x:
+		elif 'down' in directions and head_y + 1 == body_y and head_x == body_x:
 			directions.remove('down')
-		elif ('up' in directions) and snake_y - 1 == test_y and snake_x == test_x:
+		elif 'up' in directions and head_y - 1 == body_y and head_x == body_x:
 			directions.remove('up')
 
 	return directions
 
+def findFood(data, directions):
+	#Select nearest food. Eliminate directions that would take longer to reach that food.
+	#|head_x - food_x| + |head_y - food_y|
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
