@@ -55,8 +55,8 @@ def move():
 		otherSnakes.append(snake)
     
     directions = ['up', 'down', 'left', 'right']
-    directions = checkWall(data, directions)
-    directions = checkSelf(data, directions)
+    directions = checkWall(data, directions, ourHead)
+    directions = checkSelf(data, directions, ourHead, ourSnake)
 
     direction = findFood(data, directions) #random.choice(directions)
     print direction
