@@ -34,9 +34,7 @@ def start():
         'color': 'FFFFFF',
         # 'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
         'head_url': head_url,
-        'name': 'battlesnake-python',
         "taunt": "OH GOD NOT THE BEES",
-        'name': 'TROUSER SNAKEBOI',
         'head_type': 'pixel',
         'tail_type': 'pixel'
     }
@@ -45,14 +43,12 @@ def start():
 @bottle.post('/move')
 def move():
     data = bottle.request.json
-
-    # TODO: Do things with data
     
     directions = ['up', 'down', 'left', 'right']
     directions = checkWall(data, directions)
     directions = checkSelf(data, directions)
 
-    direction = random.choice(directions)
+    direction = findFood(data, directions) #random.choice(directions)
     print direction
     return {
         'move': direction,
@@ -104,7 +100,41 @@ def checkSelf(data, directions):
 def findFood(data, directions):
 	#Select nearest food. Eliminate directions that would take longer to reach that food.
 	#|head_x - food_x| + |head_y - food_y|
-	return directions
+
+	min_dist = data['width'] #or height
+	
+	#closest_food = 0 #first food is closest
+	#closest_food_x = 0
+	#closest_food_y = 0
+
+	head_x = data['you']['body']['data'][0]['x']
+	head_y = data['you']['body']['data'][0]['y']
+
+	for i in range(len(data['food']['data'])):
+		
+		food_i_x = data['food']['data'][i]['x']
+		food_i_y = data['food']['data'][i]['y']
+
+		dist_food_i = abs(head_x - food_i_x) + abs(head_y - food_i_y)
+
+		if dist_food_i <= min_dist:
+
+			min_dist = dist_food_i
+
+			closest_food = i
+			closest_food_x = food_i_x
+			closest_food_y = food_i_y
+
+	if 'left' in directions:
+		choices['left'] = abs(head_x - food_i_x - 1) + abs(head_y - food_i_y)
+	if 'right' in directions:
+		choices['right'] = abs(head_x - food_i_x + 1) + abs(head_y - food_i_y)
+	if 'up' in directions:
+		choices['up'] = abs(head_x - food_i_x - 1) + abs(head_y - food_i_y - 1)
+	if 'down' in directions:
+		choices['down'] = abs(head_x - food_i_x - 1) + abs(head_y - food_i_y + 1)
+
+	return min(choices, key=choices.get)
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
