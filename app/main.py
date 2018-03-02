@@ -103,6 +103,7 @@ def checkSelf(data, directions):
 def findFood(data, directions):
 	#Select nearest food. Eliminate directions that would take longer to reach that food.
 	#|head_x - food_x| + |head_y - food_y|
+	return directions
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
