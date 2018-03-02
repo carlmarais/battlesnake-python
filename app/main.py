@@ -64,18 +64,17 @@ def checkWall(data, directions):
 
 	snake_x = data['you']['body']['data'][0]['x']
 	snake_y = data['you']['body']['data'][0]['y']
-	# print snake_x, snake_y
 
 	# X Directions
-	if snake_x == (data['width'] - 1):
+	if ('right' in directions) and snake_x == (data['width'] - 1):
 		directions.remove('right')
-	elif snake_x == 0:
+	elif ('left' in directions) and snake_x == 0:
 		directions.remove('left')
 	
 	# Y Directions
-	if snake_y == (data['height'] - 1):
+	if ('down' in directions) and snake_y == (data['height'] - 1):
 		directions.remove('down')
-	elif snake_y == 0:
+	elif ('up' in directions) and snake_y == 0:
 		directions.remove('up')
 
 	return directions
@@ -90,13 +89,13 @@ def checkSelf(data, directions):
 		test_x = data['you']['body']['data'][i]['x']
 		test_y = data['you']['body']['data'][i]['y']
 
-		if snake_x + 1 == test_x and snake_y == test_y:
+		if ('right' in directions) and snake_x + 1 == test_x and snake_y == test_y:
 			directions.remove('right')
-		elif snake_x - 1 == test_x and snake_y == test_y:
+		elif ('left' in directions) and snake_x - 1 == test_x and snake_y == test_y:
 			directions.remove('left')
-		elif snake_y + 1 == test_y and snake_x == test_x:
+		elif ('down' in directions) and snake_y + 1 == test_y and snake_x == test_x:
 			directions.remove('down')
-		elif snake_y - 1 == test_y and snake_x == test_x:
+		elif ('up' in directions) and snake_y - 1 == test_y and snake_x == test_x:
 			directions.remove('up')
 
 	return directions
