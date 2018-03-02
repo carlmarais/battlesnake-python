@@ -6,64 +6,64 @@ import random
 
 @bottle.route('/')
 def static():
-    return "the server is running"
+	return "the server is running"
 
 
 @bottle.route('/static/<path:path>')
 def static(path):
-    return bottle.static_file(path, root='static/')
+	return bottle.static_file(path, root='static/')
 
 
 @bottle.post('/start')
 def start():
-    data = bottle.request.json
-    game_id = data.get('game_id')
-    board_width = data.get('width')
-    board_height = data.get('height')
+	data = bottle.request.json
+	game_id = data.get('game_id')
+	board_width = data.get('width')
+	board_height = data.get('height')
 
-    head_url = '%s://%s/static/head.png' % (
-        bottle.request.urlparts.scheme,
-        bottle.request.urlparts.netloc
-    )
+	head_url = '%s://%s/static/head.png' % (
+		bottle.request.urlparts.scheme,
+		bottle.request.urlparts.netloc
+	)
 
-    head_url = 'https://nerdist.com/wp-content/uploads/2015/12/Nicolas-Cage-Con-Air.jpg'
+	head_url = 'https://nerdist.com/wp-content/uploads/2015/12/Nicolas-Cage-Con-Air.jpg'
 
-    # TODO: Do things with data
+	# TODO: Do things with data
 
-    return {
-        'color': 'FFFFFF',
-        # 'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
-        'head_url': head_url,
-        "taunt": "OH GOD NOT THE BEES",
-        'head_type': 'pixel',
-        'tail_type': 'pixel'
-    }
+	return {
+		'color': 'FFFFFF',
+		# 'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
+		'head_url': head_url,
+		"taunt": "OH GOD NOT THE BEES",
+		'head_type': 'pixel',
+		'tail_type': 'pixel'
+	}
 
 
 @bottle.post('/move')
 def move():
-    data = bottle.request.json
+	data = bottle.request.json
 
 
-    # TODO: Do things with data
+	# TODO: Do things with data
 
-    ourSnake = data['you']
-    ourHead = ourSnake['body']['data'][0]
+	ourSnake = data['you']
+	ourHead = ourSnake['body']['data'][0]
 	otherSnakes = []
 
 	for snake in data['snakes']:
 		otherSnakes.append(snake)
-    
-    directions = ['up', 'down', 'left', 'right']
-    directions = checkWall(data, directions)
-    directions = checkSelf(data, directions)
+	
+	directions = ['up', 'down', 'left', 'right']
+	directions = checkWall(data, directions)
+	directions = checkSelf(data, directions)
 
-    direction = findFood(data, directions) #random.choice(directions)
-    print direction
-    return {
-        'move': direction,
-        'taunt': 'OH GOD NOT THE BEES',
-    }
+	direction = findFood(data, directions) #random.choice(directions)
+	print direction
+	return {
+		'move': direction,
+		'taunt': 'OH GOD NOT THE BEES',
+	}
 
 def checkWall(data, directions, ourHead):
 	# Remove directions that result in snake running into walls
@@ -151,8 +151,8 @@ def findFood(data, directions):
 application = bottle.default_app()
 
 if __name__ == '__main__':
-    bottle.run(
-        application,
-        host=os.getenv('IP', '0.0.0.0'),
-        port=os.getenv('PORT', '8080'),
-        debug = True)
+	bottle.run(
+		application,
+		host=os.getenv('IP', '0.0.0.0'),
+		port=os.getenv('PORT', '8080'),
+		debug = True)
