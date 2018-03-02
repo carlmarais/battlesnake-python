@@ -137,13 +137,13 @@ def findFood(data, directions):
 	choices = {key: None for key in directions}
 
 	if 'left' in directions:
-		choices['left'] = abs(head_x - closest_food_i_x - 1) + abs(head_y - closest_food_i_y)
+		choices['left'] = abs(head_x - closest_food_x - 1) + abs(head_y - closest_food_y)
 	if 'right' in directions:
-		choices['right'] = abs(head_x - closest_food_i_x + 1) + abs(head_y - closest_food_i_y)
+		choices['right'] = abs(head_x - closest_food_x + 1) + abs(head_y - closest_food_y)
 	if 'up' in directions:
-		choices['up'] = abs(head_x - closest_food_i_x - 1) + abs(head_y - closest_food_i_y - 1)
+		choices['up'] = abs(head_x - closest_food_x - 1) + abs(head_y - closest_food_y - 1)
 	if 'down' in directions:
-		choices['down'] = abs(head_x - closest_food_i_x - 1) + abs(head_y - closest_food_i_y + 1)
+		choices['down'] = abs(head_x - closest_food_x - 1) + abs(head_y - closest_food_y + 1)
 
 	return min(choices, key=choices.get)
 
