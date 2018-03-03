@@ -49,12 +49,13 @@ def move():
 	ourHead = ourSnake['body']['data'][0]
 	otherSnakes = []
 
-	for snake in data['snakes']:
+	for snake in data['snakes']['data']:
 		otherSnakes.append(snake)
 	
 	directions = ['up', 'down', 'left', 'right']
 	directions = checkWall(data, directions, ourHead)
 	directions = checkSelf(data, directions, ourHead, ourSnake)
+	directions, recommendedChoice = checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes)
 
 	if data['you']['health'] <= 50:
 		direction = findFood(data, directions)
@@ -148,10 +149,73 @@ def findFood(data, directions):
 
 	return min(choices, key=choices.get)
 
-def headCollision(data, directions):
+def checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes):
 	# Avoid a head to head collision if we are <= the other snake's size
 
-	return directions
+	our_head_x = ourHead['x']
+	our_head_y = ourHead['y']
+
+	counts = {
+		'up': 0
+		'down': 0
+		'left': 0
+		'right': 0
+	}
+
+	for snake in otherSnakes:
+
+		snake_head_x = snake['body']['data'][0]['x']
+		snake_head_y = snake['body']['data'][0]['y']
+
+		if ourSnake['length'] > snake['length']
+			continue
+
+		# Up Direction
+		if 'up' in directions:
+			if our_head_x == snake_head_x and (our_head_y - snake_head_y == 1):
+				directions.remove('up')
+			elif our_head_x == snake_head_x and (our_head_y - snake_head_y == 2):
+				counts['up'] += 1
+		# Down Direction
+		if 'down' in directions:
+			elif our_head_x == snake_head_x and (our_head_y - snake_head_y == -1):
+				directions.remove('down')
+			elif our_head_x == snake_head_x and (our_head_y - snake_head_y == -2):
+				counts['down'] += 1
+		# Left Direction
+		if 'left' in directions:
+			elif our_head_y == snake_head_y and (our_head_x - snake_head_x == 1):
+				directions.remove('left')
+			elif our_head_y == snake_head_y and (our_head_x - snake_head_x == 2):
+				counts['left'] += 1
+		# Right Direction
+		if 'right' in directions:
+			elif our_head_y == snake_head_y and (our_head_x - snake_head_x == -1):
+				directions.remove('right')
+			elif our_head_y == snake_head_y and (our_head_x - snake_head_x == -2):
+				counts['right'] += 1
+		# Up/Right Direction
+		if 'right' in directions or 'up' in directions:
+			if (our_head_x - snake_head_x == -1) and (our_head_y - snake_head_y == 1):
+				counts['up'] += 1
+				counts['right'] += 1
+		# Up/Left Direction
+		if 'left' in directions or 'up' in directions:
+			if (our_head_x - snake_head_x == 1) and (our_head_y - snake_head_y == 1):
+				counts['up'] += 1
+				counts['left'] += 1
+		# Down/Right Direction
+		if 'right' in directions or 'down' in directions:
+			if (our_head_x - snake_head_x == -1) and (our_head_y - snake_head_y == -1):
+				counts['down'] += 1
+				counts['right'] += 1
+		# Down/Left Direction
+		if 'left' in directions or 'down' in directions:
+			if (our_head_x - snake_head_x == 1) and (our_head_y - snake_head_y == -1):
+				counts['down'] += 1
+				counts['left'] += 1
+
+	return (directions, min(counts, key=counts.get))
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
