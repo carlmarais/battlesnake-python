@@ -187,7 +187,7 @@ def checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes):
 		if snake['health'] == 0:
 			continue
 
-		if ourSnake['length'] > snake['length']
+		if ourSnake['length'] > snake['length']:
 			continue
 
 		snake_head_x = snake['body']['data'][0]['x']
