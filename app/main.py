@@ -63,7 +63,7 @@ def move():
 
 	print direction
 
-	taunts = {'test', 'test2', 'test3', 'test4'}
+	taunts = ['test', 'test2', 'test3', 'test4']
 
 	return {
 		'move': direction,
