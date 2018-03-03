@@ -221,9 +221,6 @@ def checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes):
 		if snake['health'] == 0:
 			continue
 
-		if ourSnake['length'] > snake['length']:
-			continue
-
 		snake_head_x = snake['body']['data'][0]['x']
 		snake_head_y = snake['body']['data'][0]['y']
 
@@ -251,6 +248,10 @@ def checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes):
 				directions.remove('right')
 			elif our_head_y == snake_head_y and (our_head_x - snake_head_x == -2):
 				counts['right'] += 1
+
+		if ourSnake['length'] > snake['length']:
+			continue
+		
 		# Up/Right Direction
 		if 'right' in directions or 'up' in directions:
 			if (our_head_x - snake_head_x == -1) and (our_head_y - snake_head_y == 1):
