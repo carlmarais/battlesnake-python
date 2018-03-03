@@ -265,7 +265,9 @@ def checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes):
 				counts['down'] += 1
 				counts['left'] += 1
 
-		directions.remove(max(counts, key=counts.get))
+		remove_dir = max(counts, key=counts.get)
+		if remove_dir in directions:
+			directions.remove(remove_dir)
 
 	return directions
 	#return (directions, min(counts, key=counts.get))
