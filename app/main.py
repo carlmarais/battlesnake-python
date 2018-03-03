@@ -31,7 +31,7 @@ def start():
 	# TODO: Do things with data
 
 	return {
-		'color': 'FFB600',
+		'color': '#FFB600',
 		# 'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
 		'head_url': head_url,
 		"taunt": "OH GOD NOT THE BEES",
