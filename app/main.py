@@ -176,10 +176,10 @@ def checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes):
 	our_head_y = ourHead['y']
 
 	counts = {
-		'up': 0
-		'down': 0
-		'left': 0
-		'right': 0
+		'up': 0,
+		'down': 0,
+		'left': 0,
+		'right': 0,
 	}
 
 	for snake in otherSnakes:
