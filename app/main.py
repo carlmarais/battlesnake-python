@@ -1,8 +1,17 @@
+# Battlesnake 2018: PirateSnake
+#
+# CREATORS: - Cameron Day
+#			- Carl Marais
+#
+# PURPOSES: - Be snake.
+#			- Survive.
+#			- Kill other snakes.
+#			- Be the very best - the best there ever was.
+#
+
 import bottle
 import os
 import random
-
-
 
 @bottle.route('/')
 def static():
@@ -30,7 +39,6 @@ def start():
 
 	return {
 		'color': '#FFB600',
-		# 'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
 		'head_url': head_url,
 		"taunt": "Slither me timbers",
 		'head_type': 'tongue',
@@ -42,28 +50,34 @@ def start():
 def move():
 	data = bottle.request.json
 
-
-	# TODO: Do things with data
-
 	ourSnake = data['you']
 	ourHead = ourSnake['body']['data'][0]
+	ourTail = ourSnake['body']['data'][-1]
+	
 	otherSnakes = []
-
 	for snake in data['snakes']:
 		otherSnakes.append(snake)
 	
+
+	foodList = data['food']['data']
+
+	# Eliminate dangerous moves.
+
 	directions = ['up', 'down', 'left', 'right']
 	directions = checkWall(data, directions, ourHead)
 	directions = checkSelf(data, directions, ourHead, ourSnake)
 
-	if data['you']['health'] <= 50:
+	# If snake's health is below designated threshold, seek food. Else, pick random direction.
+	if ourSnake['health'] <= data['width'] + data['height']:
 		direction = findFood(data, directions)
 	else:
 		direction = random.choice(directions)
 
+	# For debugging purposes.
 	print direction
 
-	taunts = ['test', 'test2', 'test3', 'test4']
+	# Taunt other slithery, naughty snakes.
+	taunts = ['YARRR!', 'Slither me timbers!', 'Ahoy matey!']
 
 	return {
 		'move': direction,
@@ -71,27 +85,27 @@ def move():
 	}
 
 def checkWall(data, directions, ourHead):
-	# Remove directions that result in snake running into walls
+	# Remove directions that result in snake running into walls.
 
-	snake_x = ourHead['x']
-	snake_y = ourHead['y']
+	head_x = ourHead['x']
+	head_y = ourHead['y']
 
 	# X Directions
-	if 'right' in directions and snake_x == (data['width'] - 1):
+	if 'right' in directions and head_x == (data['width'] - 1):
 		directions.remove('right')
-	elif 'left' in directions and snake_x == 0:
+	elif 'left' in directions and head_x == 0:
 		directions.remove('left')
 	
 	# Y Directions
-	if 'down' in directions and snake_y == (data['height'] - 1):
+	if 'down' in directions and head_y == (data['height'] - 1):
 		directions.remove('down')
-	elif 'up' in directions and snake_y == 0:
+	elif 'up' in directions and head_y == 0:
 		directions.remove('up')
 
 	return directions
 
 def checkSelf(data, directions, ourHead, ourSnake):
-	# Remove directions that result in snake running into walls
+	# Remove directions that result in snake running into self.
 
 	head_x = ourHead['x']
 	head_y = ourHead['y']
@@ -111,19 +125,19 @@ def checkSelf(data, directions, ourHead, ourSnake):
 
 	return directions
 
-def findFood(data, directions):
-	#Select nearest food. Eliminate directions that would take longer to reach that food.
-	#|head_x - food_x| + |head_y - food_y|
+def findFood(data, directions, ourHead, foodList):
+	# Remove directions that result in snake taking longer to reach nearest food.
+	# Consider |head_x - food_x| + |head_y - food_y|
 
 	min_dist = data['width'] #or height...tbd
 
-	head_x = data['you']['body']['data'][0]['x']
-	head_y = data['you']['body']['data'][0]['y']
+	head_x = ourHead['x']
+	head_y = ourHead['y']
 
-	for i in range(len(data['food']['data'])):
+	for i in range(len(foodList)):
 		
-		food_i_x = data['food']['data'][i]['x']
-		food_i_y = data['food']['data'][i]['y']
+		food_i_x = foodList[i]['x']
+		food_i_y = foodList[i]['y']
 
 		dist_food_i = abs(head_x - food_i_x) + abs(head_y - food_i_y)
 
@@ -147,6 +161,11 @@ def findFood(data, directions):
 		choices['down'] = abs(head_x - closest_food_x - 1) + abs(head_y - closest_food_y + 1)
 
 	return min(choices, key=choices.get)
+
+def snakeAvoidance(data, directions, otherSnakes, ourHead, ourTail):
+	# Avoid collisions with other snake bodies.
+
+	return directions
 
 def headCollision(data, directions):
 	# Avoid a head to head collision if we are <= the other snake's size
