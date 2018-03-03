@@ -148,6 +148,11 @@ def findFood(data, directions):
 
 	return min(choices, key=choices.get)
 
+def headCollision(data, directions):
+	# Avoid a head to head collision if we are <= the other snake's size
+
+	return directions
+
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
 
