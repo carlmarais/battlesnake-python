@@ -58,7 +58,11 @@ def move():
 	directions = checkWall(data, directions, ourHead)
 	directions = checkSelf(data, directions, ourHead, ourSnake)
 
-	direction = findFood(data, directions) #random.choice(directions)
+	if data['you']['health'] <= 50:
+		direction = findFood(data, directions)
+	else:
+		direction = random.choice(directions)
+
 	print direction
 	return {
 		'move': direction,
