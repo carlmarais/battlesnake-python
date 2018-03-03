@@ -67,6 +67,7 @@ def move():
 	directions = checkWall(data, directions, ourHead)
 	directions = checkSelf(data, directions, ourHead, ourSnake)
 	directions = checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes)
+	directions = tailAvoidance(data, directions, otherSnakes, ourHead, ourTail)
 
 	# If snake's health is below designated threshold, seek food. Else, pick random direction.
 	if ourSnake['health'] <= 1.5*(data['width'] + data['height']):
