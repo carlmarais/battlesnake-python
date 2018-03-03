@@ -203,6 +203,9 @@ def tailAvoidance(data, directions, otherSnakes, ourHead, ourTail):
 def checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes):
 	# Avoid a head to head collision if we are <= the other snake's size
 
+	if len(directions) == 1:
+		return directions
+
 	our_head_x = ourHead['x']
 	our_head_y = ourHead['y']
 
@@ -272,13 +275,6 @@ def checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes):
 		remove_dir = max(counts, key=counts.get)
 		if remove_dir in directions and counts[remove_dir] > 0:
 			directions.remove(remove_dir)
-		else:
-			# In case there was a tie
-			counts[remove_dir] -= 1
-			remove_dir_replacement = max(counts, key=counts.get)
-
-			if remove_dir_replacement in directions and counts[remove_dir] > 0:
-				directions.remove(remove_dir_replacement)
 
 	return directions
 	#return (directions, min(counts, key=counts.get))
