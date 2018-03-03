@@ -70,7 +70,10 @@ def move():
 	directions = tailAvoidance(data, directions, otherSnakes, ourHead, ourTail)
 
 	# If snake's health is below designated threshold, seek food. Else, pick random direction.
-	if ourSnake['health'] <= 1.5*(data['width'] + data['height']):
+
+	snake_lengths = [snake['length'] for snake in otherSnakes]
+
+	if ourSnake['health'] <= 1.5*(data['width'] + data['height']) or ourSnake['length'] <= min(snake_lengths):
 		direction = findFood(data, directions, ourHead, foodList)
 	else:
 		direction = random.choice(directions)
@@ -174,7 +177,7 @@ def tailAvoidance(data, directions, otherSnakes, ourHead, ourTail):
 		if snake['health'] == 0:
 			continue
 		else:
-			for i in range(1, snake['length'] - 1):
+			for i in range(1, snake['length']):
 				snake_i_x = snake['body']['data'][i]['x']
 				snake_i_y = snake['body']['data'][i]['y']
 
