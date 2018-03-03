@@ -31,12 +31,12 @@ def start():
 	# TODO: Do things with data
 
 	return {
-		'color': 'FFFFFF',
+		'color': 'FFB600',
 		# 'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
 		'head_url': head_url,
 		"taunt": "OH GOD NOT THE BEES",
-		'head_type': 'pixel',
-		'tail_type': 'pixel'
+		'head_type': 'tongue',
+		'tail_type': 'curled'
 	}
 
 
@@ -110,11 +110,7 @@ def findFood(data, directions):
 	#Select nearest food. Eliminate directions that would take longer to reach that food.
 	#|head_x - food_x| + |head_y - food_y|
 
-	min_dist = data['width'] #or height
-	
-	#closest_food = 0 #first food is closest
-	#closest_food_x = 0
-	#closest_food_y = 0
+	min_dist = data['width'] #or height...tbd
 
 	head_x = data['you']['body']['data'][0]['x']
 	head_y = data['you']['body']['data'][0]['y']
