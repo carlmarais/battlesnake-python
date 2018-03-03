@@ -53,17 +53,17 @@ def move():
 
 	for snake in data['snakes']:
 		otherSnakes.append(snake)
-	
-	directions = ['up', 'down', 'left', 'right']
-	directions = checkWall(data, directions)
-	directions = checkSelf(data, directions)
+    
+    directions = ['up', 'down', 'left', 'right']
+    directions = checkWall(data, directions, ourHead)
+    directions = checkSelf(data, directions, ourHead, ourSnake)
 
-	direction = findFood(data, directions) #random.choice(directions)
-	print direction
-	return {
-		'move': direction,
-		'taunt': 'OH GOD NOT THE BEES',
-	}
+    direction = findFood(data, directions) #random.choice(directions)
+    print direction
+    return {
+        'move': direction,
+        'taunt': 'OH GOD NOT THE BEES',
+    }
 
 def checkWall(data, directions, ourHead):
 	# Remove directions that result in snake running into walls
