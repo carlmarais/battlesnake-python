@@ -272,6 +272,13 @@ def checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes):
 		remove_dir = max(counts, key=counts.get)
 		if remove_dir in directions and counts[remove_dir] > 0:
 			directions.remove(remove_dir)
+		else:
+			# In case there was a tie
+			counts[remove_dir] -= 1
+			remove_dir_replacement = max(counts, key=counts.get)
+
+			if remove_dir_replacement in directions and counts[remove_dir] > 0:
+				directions.remove(remove_dir_replacement)
 
 	return directions
 	#return (directions, min(counts, key=counts.get))
