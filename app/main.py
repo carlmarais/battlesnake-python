@@ -65,9 +65,13 @@ def move():
 	# Eliminate dangerous moves.
 	directions = ['up', 'down', 'left', 'right']
 	directions = checkWall(data, directions, ourHead)
+	print "Directions after checkWall: " + directions
 	directions = checkSelf(data, directions, ourHead, ourSnake)
+	print "Directions after checkSelf: " + directions
 	directions = checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes)
+	print "Directions after checkHeadCollision: " + directions
 	directions = tailAvoidance(data, directions, otherSnakes, ourHead, ourTail)
+	print "Directions after tailAvoidance: " + directions
 
 	# If snake's health is below designated threshold, seek food. Else, pick random direction.
 
