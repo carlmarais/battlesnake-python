@@ -185,12 +185,12 @@ def tailAvoidance(data, directions, otherSnakes, ourHead, ourTail):
 				snake_i_x = snake['body']['data'][i]['x']
 				snake_i_y = snake['body']['data'][i]['y']
 
-				if 'up' in directions:
-					if snake_i_x == head_x and snake_i_y == head_y + 1:
-						directions.remove('up')
 				if 'down' in directions:
-					if snake_i_x == head_x and snake_i_y == head_y - 1:
+					if snake_i_x == head_x and snake_i_y == head_y + 1:
 						directions.remove('down')
+				if 'up' in directions:
+					if snake_i_x == head_x and snake_i_y == head_y - 1:
+						directions.remove('up')
 				if 'right' in directions:
 					if snake_i_y == head_y and snake_i_x == head_x + 1:
 						directions.remove('right')
