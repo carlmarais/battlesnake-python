@@ -40,7 +40,7 @@ def start():
 	return {
 		'color': '#FFB600',
 		'head_url': head_url,
-		"taunt": "Slither me timbers",
+		"taunt": "Slither me timbers!",
 		'head_type': 'tongue',
 		'tail_type': 'curled'
 	}
@@ -55,20 +55,18 @@ def move():
 	ourTail = ourSnake['body']['data'][-1]
 	
 	otherSnakes = []
-	for snake in data['snakes']:
+	for snake in data['snakes']['data']:
 		otherSnakes.append(snake)
 	
-
 	foodList = data['food']['data']
 
 	# Eliminate dangerous moves.
-
 	directions = ['up', 'down', 'left', 'right']
 	directions = checkWall(data, directions, ourHead)
 	directions = checkSelf(data, directions, ourHead, ourSnake)
 
 	# If snake's health is below designated threshold, seek food. Else, pick random direction.
-	if ourSnake['health'] <= data['width'] + data['height']:
+	if ourSnake['health'] <= 1.5*(data['width'] + data['height']):
 		direction = findFood(data, directions, ourHead, foodList)
 	else:
 		direction = random.choice(directions)
@@ -162,8 +160,32 @@ def findFood(data, directions, ourHead, foodList):
 
 	return min(choices, key=choices.get)
 
-def snakeAvoidance(data, directions, otherSnakes, ourHead, ourTail):
+def tailAvoidance(data, directions, otherSnakes, ourHead, ourTail):
 	# Avoid collisions with other snake bodies.
+
+	head_x = ourHead['x']
+	head_y = ourHead['y']
+
+	for snake in otherSnakes:
+		if snake['health'] == 0:
+			continue
+		else:
+			for i in range(1, snake['length'] - 1):
+				snake_i_x = snake['body']['data'][i]['x']
+				snake_i_y = snake['body']['data'][i]['y']
+
+				if 'up' in directions:
+					if snake_i_x == head_x and snake_i_y == head_y + 1:
+						directions.remove('up')
+				if 'down' in directions:
+					if snake_i_x == head_x and snake_i_y == head_y - 1:
+						directions.remove('down')
+				if 'right' in directions:
+					if snake_i_y == head_y and snake_i_x == head_x + 1:
+						directions.remove('right')
+				if 'left' in directions:
+					if snake_i_y == head_y and snake_i_x == head_x - 1:
+						directions.remove('left')
 
 	return directions
 
