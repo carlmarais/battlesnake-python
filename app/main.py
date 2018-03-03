@@ -26,15 +26,13 @@ def start():
 		bottle.request.urlparts.netloc
 	)
 
-	head_url = 'https://nerdist.com/wp-content/uploads/2015/12/Nicolas-Cage-Con-Air.jpg'
-
-	# TODO: Do things with data
+	head_url = 'http://cheesepirate.com/avatars/nate_the_pirate_snake.png'
 
 	return {
 		'color': '#FFB600',
 		# 'taunt': '{} ({}x{})'.format(game_id, board_width, board_height),
 		'head_url': head_url,
-		"taunt": "OH GOD NOT THE BEES",
+		"taunt": "Slither me timbers",
 		'head_type': 'tongue',
 		'tail_type': 'curled'
 	}
@@ -64,9 +62,12 @@ def move():
 		direction = random.choice(directions)
 
 	print direction
+
+	taunts = {'test', 'test2', 'test3', 'test4'}
+
 	return {
 		'move': direction,
-		'taunt': 'OH GOD NOT THE BEES',
+		'taunt': random.choice(taunts),
 	}
 
 def checkWall(data, directions, ourHead):
