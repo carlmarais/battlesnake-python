@@ -69,7 +69,7 @@ def move():
 
 	# If snake's health is below designated threshold, seek food. Else, pick random direction.
 	if ourSnake['health'] <= data['width'] + data['height']:
-		direction = findFood(data, directions)
+		direction = findFood(data, directions, ourHead, foodList)
 	else:
 		direction = random.choice(directions)
 
