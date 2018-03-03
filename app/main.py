@@ -184,11 +184,14 @@ def checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes):
 
 	for snake in otherSnakes:
 
-		snake_head_x = snake['body']['data'][0]['x']
-		snake_head_y = snake['body']['data'][0]['y']
+		if snake['health'] == 0:
+			continue
 
 		if ourSnake['length'] > snake['length']
 			continue
+
+		snake_head_x = snake['body']['data'][0]['x']
+		snake_head_y = snake['body']['data'][0]['y']
 
 		# Up Direction
 		if 'up' in directions:
