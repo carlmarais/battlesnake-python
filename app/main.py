@@ -138,7 +138,7 @@ def findFood(data, directions, ourHead, foodList):
 	# Remove directions that result in snake taking longer to reach nearest food.
 	# Consider |head_x - food_x| + |head_y - food_y|
 
-	min_dist = data['width'] #or height...tbd
+	min_dist = 10000 #or height...tbd
 
 	head_x = ourHead['x']
 	head_y = ourHead['y']
