@@ -66,7 +66,7 @@ def move():
 	directions = ['up', 'down', 'left', 'right']
 	directions = checkWall(data, directions, ourHead)
 	directions = checkSelf(data, directions, ourHead, ourSnake)
-	directions, recommendedChoice = checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes)
+	directions = checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes)
 
 	# If snake's health is below designated threshold, seek food. Else, pick random direction.
 	if ourSnake['health'] <= 1.5*(data['width'] + data['height']):
@@ -261,7 +261,8 @@ def checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes):
 				counts['down'] += 1
 				counts['left'] += 1
 
-	return (directions, min(counts, key=counts.get))
+	return directions
+	#return (directions, min(counts, key=counts.get))
 
 # Expose WSGI app (so gunicorn can find it)
 application = bottle.default_app()
