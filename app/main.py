@@ -201,19 +201,19 @@ def checkHeadCollision(data, directions, ourHead, ourSnake, otherSnakes):
 				counts['up'] += 1
 		# Down Direction
 		if 'down' in directions:
-			elif our_head_x == snake_head_x and (our_head_y - snake_head_y == -1):
+			if our_head_x == snake_head_x and (our_head_y - snake_head_y == -1):
 				directions.remove('down')
 			elif our_head_x == snake_head_x and (our_head_y - snake_head_y == -2):
 				counts['down'] += 1
 		# Left Direction
 		if 'left' in directions:
-			elif our_head_y == snake_head_y and (our_head_x - snake_head_x == 1):
+			if our_head_y == snake_head_y and (our_head_x - snake_head_x == 1):
 				directions.remove('left')
 			elif our_head_y == snake_head_y and (our_head_x - snake_head_x == 2):
 				counts['left'] += 1
 		# Right Direction
 		if 'right' in directions:
-			elif our_head_y == snake_head_y and (our_head_x - snake_head_x == -1):
+			if our_head_y == snake_head_y and (our_head_x - snake_head_x == -1):
 				directions.remove('right')
 			elif our_head_y == snake_head_y and (our_head_x - snake_head_x == -2):
 				counts['right'] += 1
