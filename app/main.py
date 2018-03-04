@@ -66,7 +66,7 @@ def move():
 	directions = ['up', 'down', 'left', 'right']
 	directions = checkWall(data, directions, ourHead)
 	print "Directions after checkWall: " + str(directions)
-	directions = checkSelf(data, directions, ourHead, ourSnake)
+	directions = checkSelf(data, directions, ourHead['x'], ourHead['y'], ourSnake)
 	print "Directions after checkSelf: " + str(directions)
 	directions = tailAvoidance(data, directions, otherSnakes, ourHead, ourTail)
 	print "Directions after tailAvoidance: " + str(directions)
@@ -77,7 +77,7 @@ def move():
 
 	snake_lengths = [snake['length'] for snake in otherSnakes]
 
-	if ourSnake['health'] <= 1.5*(data['width'] + data['height']) or ourSnake['length'] <= min(snake_lengths):
+	if ourSnake['health'] <= 2*(data['width'] + data['height']) or ourSnake['length'] <= min(snake_lengths):
 		direction = findFood(data, directions, ourHead, foodList)
 	else:
 		direction = random.choice(directions)
@@ -113,11 +113,11 @@ def checkWall(data, directions, ourHead):
 
 	return directions
 
-def checkSelf(data, directions, ourHead, ourSnake):
+def checkSelf(data, directions, our_head_x, our_head_y, ourSnake):
 	# Remove directions that result in snake running into self.
 
-	head_x = ourHead['x']
-	head_y = ourHead['y']
+	head_x = our_head_x
+	head_y = our_head_y
 
 	for i in range(len(data['you']['body']['data'])):
 		body_x = ourSnake['body']['data'][i]['x']
@@ -125,12 +125,47 @@ def checkSelf(data, directions, ourHead, ourSnake):
 
 		if 'right' in directions and head_x + 1 == body_x and head_y == body_y:
 			directions.remove('right')
+
+			#check up
+			if 'up' in directions:
+				checkSelf(data, directions, our_head_x, our_head_y - 1, ourSnake)
+			
+			#check down
+			if 'down' in directions:
+				checkSelf(data, directions, our_head_x, our_head_y + 1, ourSnake)	
+
 		elif 'left' in directions and head_x - 1 == body_x and head_y == body_y:
 			directions.remove('left')
+
+			#check up
+			if 'up' in directions:
+				checkSelf(data, directions, our_head_x, our_head_y - 1, ourSnake)
+			
+			#check down
+			if 'down' in directions:
+				checkSelf(data, directions, our_head_x, our_head_y + 1, ourSnake)
+
 		elif 'down' in directions and head_y + 1 == body_y and head_x == body_x:
 			directions.remove('down')
+
+			#check left
+			if 'left' in directions:
+				checkSelf(data, directions, our_head_x - 1, our_head_y, ourSnake)
+			
+			#check right
+			if 'right' in directions:
+				checkSelf(data, directions, our_head_x + 1, our_head_y, ourSnake)
+
 		elif 'up' in directions and head_y - 1 == body_y and head_x == body_x:
 			directions.remove('up')
+
+			#check left
+			if 'left' in directions:
+				checkSelf(data, directions, our_head_x - 1, our_head_y, ourSnake)
+			
+			#check right
+			if 'right' in directions:
+				checkSelf(data, directions, our_head_x + 1, our_head_y, ourSnake)
 
 	return directions
 
