@@ -77,7 +77,7 @@ def move():
 
 	snake_lengths = [snake['length'] for snake in otherSnakes]
 
-	if ourSnake['health'] <= 2*(data['width'] + data['height']) or ourSnake['length'] <= min(snake_lengths):
+	if ourSnake['health'] <= 1*(data['width'] + data['height']) or ourSnake['length'] <= min(snake_lengths):
 		direction = findFood(data, directions, ourHead, foodList)
 	else:
 		direction = random.choice(directions)
