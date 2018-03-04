@@ -125,47 +125,12 @@ def checkSelf(data, directions, our_head_x, our_head_y, ourSnake):
 
 		if 'right' in directions and head_x + 1 == body_x and head_y == body_y:
 			directions.remove('right')
-
-			#check up
-			if 'up' in directions:
-				checkSelf(data, directions, our_head_x, our_head_y - 1, ourSnake)
-			
-			#check down
-			if 'down' in directions:
-				checkSelf(data, directions, our_head_x, our_head_y + 1, ourSnake)	
-
 		elif 'left' in directions and head_x - 1 == body_x and head_y == body_y:
 			directions.remove('left')
-
-			#check up
-			if 'up' in directions:
-				checkSelf(data, directions, our_head_x, our_head_y - 1, ourSnake)
-			
-			#check down
-			if 'down' in directions:
-				checkSelf(data, directions, our_head_x, our_head_y + 1, ourSnake)
-
 		elif 'down' in directions and head_y + 1 == body_y and head_x == body_x:
 			directions.remove('down')
-
-			#check left
-			if 'left' in directions:
-				checkSelf(data, directions, our_head_x - 1, our_head_y, ourSnake)
-			
-			#check right
-			if 'right' in directions:
-				checkSelf(data, directions, our_head_x + 1, our_head_y, ourSnake)
-
 		elif 'up' in directions and head_y - 1 == body_y and head_x == body_x:
 			directions.remove('up')
-
-			#check left
-			if 'left' in directions:
-				checkSelf(data, directions, our_head_x - 1, our_head_y, ourSnake)
-			
-			#check right
-			if 'right' in directions:
-				checkSelf(data, directions, our_head_x + 1, our_head_y, ourSnake)
 
 	return directions
 
